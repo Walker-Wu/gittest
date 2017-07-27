@@ -1,4 +1,7 @@
 # -*- coding:utf-8 -*-
+'''
+转换地铁站名称为百度地图坐标
+'''
 import time
 start = time.clock()
 
