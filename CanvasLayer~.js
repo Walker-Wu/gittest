@@ -27,7 +27,6 @@ function update() {
     //ctx.fillStyle = "rgba(50, 50, 255, " + x + ")";
     ctx.fillStyle = "rgba(50, 50, 255, 0.3 )";
     ctx.strokeStyle = "rgba(50, 50, 255, 0.7)";
-    ctx.beginPath();
 
     var data = [];
     var dataNew = [];
@@ -37,11 +36,13 @@ function update() {
     }
 
     drawGrids(data, dataNew, ctx);
-    ctx.stroke();
-    ctx.fill();
+
 }
 function drawGrids(sw, ne, ctx) {
+
     for (var i = 0, len = sw.length; i < len; i++) {
+        ctx.beginPath();
+
         // 绘制时需要对经纬度进行转换
         var pixel = map.pointToPixel(sw[i]);
         var pixelNew = map.pointToPixel(ne[i]);
@@ -57,6 +58,9 @@ function drawGrids(sw, ne, ctx) {
         ctx.lineTo(pixelNew.x, pixel.y);
         ctx.lineTo(pixel.x, pixel.y);
         //ctx.closePath();  //效率低于lineTo
+        ctx.stroke();
+        ctx.fill();
     }
+ 
 }
 
