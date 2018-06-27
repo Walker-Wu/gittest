@@ -2,7 +2,7 @@ var map
 
 function initBMap() {
     map = new BMap.Map("allmap", { enableMapClick: false });            // 创建Map实例，并关闭底图可点功能
-    var point = new BMap.Point(lng, lat); // 创建点坐标
+    var point = new BMap.Point(113.364805, 23.140929); // 创建点坐标
     map.centerAndZoom(point, 19);
     map.enableScrollWheelZoom();                 //启用滚轮放大缩小
 
@@ -35,7 +35,8 @@ function update() {
         dataNew.push(new BMap.Point((coordData[i][0] + 0.00018), (coordData[i][1]) + 0.00016));
     }
 
-    drawGrids(data, dataNew, ctx);
+    draw(sw, sw2ne(sw, sideLengthKm), ctx);
+    //drawGrids(data, dataNew, ctx);
 
 }
 function drawGrids(sw, ne, ctx) {
@@ -61,6 +62,6 @@ function drawGrids(sw, ne, ctx) {
         ctx.stroke();
         ctx.fill();
     }
- 
+
 }
 
