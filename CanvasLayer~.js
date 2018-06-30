@@ -35,8 +35,11 @@ function update() {
         dataNew.push(new BMap.Point((coordData[i][0] + 0.00018), (coordData[i][1]) + 0.00016));
     }
 
-    draw(sw, sw2ne(sw, sideLengthKm), ctx);
+    //draw(sw, sw2ne(sw, sideLengthKm), ctx);
     //drawGrids(data, dataNew, ctx);
+    var grid1 = new Grid(sw);
+    console.log(grid1);
+    grid1.draw(ctx);
 
 }
 function drawGrids(sw, ne, ctx) {

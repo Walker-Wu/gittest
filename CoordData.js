@@ -49,20 +49,10 @@ function getCoord() {
 //经度范围：(x-L/111, x+L/111)
 //纬度范围：(y-L/(111*cosy), y+L/(111*cosy))
 //只需要精确到小数点后7位，精度就是1CM
-var sw = { lng: '', lat: '' };
-var ne = { lng: '', lat: '' };
-sw.lng = 113.364805;
-sw.lat = 23.140929;
-sideLengthKm = 0.02;
+var sw = { lng: 113.364805, lat: 23.140929 };
 
-console.log(sw2ne(sw, sideLengthKm));
 
-function sw2ne(sw, size) {
-    var ne = sw;
-    ne.lng = sw.lng + size / 111;
-    ne.lat = sw.lat + size / (111 * Math.cos(sw.lat));
-    return ne;
-}
+/*
 function draw(swArr, neArr, ctx) {
 
     for (var i = 0, len = swArr.length; i < len; i++) {
@@ -83,3 +73,34 @@ function draw(swArr, neArr, ctx) {
     }
 
 }
+*/
+function Grid(point) {
+    this.min = point;
+    this.max = this.sw2ne(this.min, this.size);
+}
+Grid.prototype.size = 0.02;
+Grid.prototype.sw2ne = function (sw, size) {
+    var ne = { lng: '', lat: '' };
+    ne.lng = sw.lng + size / 111;
+    ne.lat = sw.lat + size / (111 * Math.cos(sw.lat));
+    return ne;
+}
+Grid.prototype.draw = function (ctx) {
+    ctx.beginPath();
+    // 绘制时需要对经纬度进行转换
+    var swPixel = map.pointToPixel(this.min);
+    var nePixel = map.pointToPixel(this.max);
+    ctx.moveTo(swPixel.x, swPixel.y);
+    ctx.lineTo(swPixel.x, nePixel.y);
+    ctx.lineTo(nePixel.x, nePixel.y);
+    ctx.lineTo(nePixel.x, swPixel.y);
+    //ctx.closePath();  //效率低于lineTo
+    ctx.lineTo(swPixel.x, swPixel.y);
+    ctx.stroke();
+    ctx.fill();
+}
+/*
+var grid1 = new Grid(sw);
+console.log(grid1);
+grid1.draw(ctx);
+*/
